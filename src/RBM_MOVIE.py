@@ -138,7 +138,7 @@ class SoftmaxRBM(nn.Module):
 # 3. 训练模型
 # ==========================================
 model = SoftmaxRBM(n_movies, K, n_hidden=64)
-EPOCHS = 30
+EPOCHS = 100
 
 print("\n🚀 开始训练 Softmax RBM (处理缺失值)...")
 for epoch in range(EPOCHS):
@@ -192,7 +192,4 @@ for idx in recommended_movie_indices[:5]:
     stars = "⭐" * int(round(pred_score))
     print(f"   - {movie_name}: 预测 {pred_score:.2f} 星  {stars}")
 
-print("\n💡 原理总结：")
-print("RBM 通过隐藏层学习到了 '电影特征' 和 '用户偏好' 的联合分布。")
-print("当你把一个不完整的评分向量输入时，网络利用能量最小化原则，")
-print("自动把缺失的 Softmax 单元 '拉' 到最符合该用户特征向量的概率分布上！")
+print("\n📚 注意：以上预测评分仅供参考，实际评分可能因用户喜好不同而有所差异。")
