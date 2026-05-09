@@ -93,6 +93,15 @@ class SoftmaxRBM(nn.Module):
         return term1 + term2 + term3
 
     # -----------------------------------------------------------------
+    # 自由能函数 (Goodfellow 2016 Eq. 20.10)
+    # F(v) = -a^T v - sum_j softplus(W_j^T v + b_j)
+    # Applied to Softmax RBM structure (Salakhutdinov et al. 2007)
+    # -----------------------------------------------------------------
+    def free_energy(self, v_flat):
+        hidden_term = v_flat @ self.W + self.h_bias
+        return -(v_flat @ self.v_bias) - torch.sum(F.softplus(hidden_term), dim=1)
+
+    # -----------------------------------------------------------------
     # P(h_j=1|V) = sigma(b_j + sum_{i,k} v_i^k W_{i,j,k})  <- S07 Eq. 2
     # -----------------------------------------------------------------
     def sample_h(self, v_flat, mask_flat):
