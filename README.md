@@ -9,6 +9,10 @@
 ├── src/
 │   ├── RBM_MNIST.py    # 二值 RBM：处理黑白像素，实现图像重构
 │   └── RBM_MOVIE.py    # Softmax RBM：处理 1-5 星评分，实现缺失值填补与推荐
+├── src_v2/
+│   ├── RBM_MNIST.py    # 升级版: 二值 RBM + 能量函数 + 自由能
+│   ├── RBM_MOVIE.py    # 升级版: Softmax RBM + 可视化 + 检查点
+│   └── ALGORITHM.md    # 算法详解与公式推导文档
 ├── pyproject.toml      # uv 依赖管理文件
 └── README.md
 ```
@@ -30,8 +34,11 @@ uv sync
 ---
 ## 🚀 运行
 ```bash
-uv run python src/RBM_MNIST.py
-uv run python src/RBM_MOVIE.py
+uv run python src/RBM_MNIST.py          # 原版: 快速演示
+uv run python src/RBM_MOVIE.py          # 原版: 终端推荐
+
+uv run python src_v2/RBM_MNIST.py       # 升级版: 能量函数 + 自由能显示
+uv run python src_v2/RBM_MOVIE.py       # 升级版: 可视化柱状图 + 热力图
 ```
 ---
 ## 🎬 效果演示与原理剖析
@@ -46,6 +53,35 @@ uv run python src/RBM_MOVIE.py
 *   **Softmax 可见单元**：1-5 星不是连续数值，而是 5 个类别。代码中将一部电影映射为 5 个神经元，使用 `F.softmax` 实现“多选一”的概率分布。
 *   **运行结果**：自动下载 MovieLens 100k 小样本，训练后在终端打印出某个用户看过的电影，以及 RBM 为他填补的“未看过但可能喜欢”的 Top 5 电影及预测星级。
 ---
+
+## ⬆️ 升级版本 (src_v2/)
+
+**为什么要升级？** 为了让代码更贴合 Hinton (2002/2012) 和 Salakhutdinov (2007) 论文的公式标准，并增加教学演示功能。
+
+### 核心升级点
+
+- **能量函数 E(v,h)** 和 **自由能 F(v)** 显式实现，代码注释标注论文公式出处
+- **梯度方案标准化**: 正相位采样（信息瓶颈正则化），负相位概率（方差缩减）— 严格遵循 Hinton (2012) §3.4
+- **模型检查点**: 训练后自动保存 `.pth` 文件，再次运行跳过训练直接推理
+- **`if __name__ == "__main__"` 保护**: 代码结构更规范，方便作为模块导入
+- **[RBM_MOVIE.py]** 新增 **Matplotlib 可视化**: 推荐电影柱状图 + 用户评分热力图
+
+#### MNIST 升级版 (`src_v2/RBM_MNIST.py`)
+
+```bash
+uv run python src_v2/RBM_MNIST.py      # 自动训练/加载 → 显示重构结果 + 自由能值
+```
+
+#### MovieLens 升级版 (`src_v2/RBM_MOVIE.py`)
+
+```bash
+uv run python src_v2/RBM_MOVIE.py      # 自动训练/加载 → 终端推荐 + 可视化图表
+```
+
+📖 算法原理与公式详解请参见: [`src_v2/ALGORITHM.md`](src_v2/ALGORITHM.md)
+
+---
+
 ## 🧠 核心算法：为什么不用 `loss.backward()`？
 在传统的 PyTorch 训练中，我们习惯：
 ```python
