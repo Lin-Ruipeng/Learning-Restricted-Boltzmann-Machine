@@ -1,0 +1,23 @@
+{
+  "active_plan": "C:\\Users\\MuXinYue\\Desktop\\智能控制\\Project\\.sisyphus\\plans\\rbm-docs.md",
+  "started_at": "2026-05-09T08:40:37.113Z",
+  "session_ids": [
+    "ses_1f4643005ffeCUp3X6cIF1b9Ut"
+  ],
+  "session_origins": {
+    "ses_1f4643005ffeCUp3X6cIF1b9Ut": "direct"
+  },
+  "plan_name": "rbm-docs",
+  "agent": "atlas",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "Create `src_v2/ALGORITHM.md` — Algorithm and Formula Document",
+      "session_id": "ses_1f418e297ffespLRB9CfPRHgkz",
+      "agent": "Sisyphus-Junior",
+      "category": "writing",
+      "updated_at": "2026-05-09T08:47:44.431Z"
+    }
+  }
+}
