@@ -15,3 +15,6 @@ ml-100k/
 
 # model
 *.pth
+
+# Planning infrastructure (internal workflow)
+.sisyphus/
