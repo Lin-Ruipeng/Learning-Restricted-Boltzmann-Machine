@@ -29,7 +29,7 @@ Project/
 |------|----------|-------|
 | Binary RBM (images) | `src/RBM_MNIST.py` | Self-contained: model + train + inference |
 | Softmax RBM (ratings) | `src/RBM_MOVIE.py` | Self-contained: model + train + recommendation demo |
-| Dependencies | `pyproject.toml` | NB: torch/torchvision NOT declared — install separately |
+| Dependencies | `pyproject.toml` | torch/torchvision declared in pyproject.toml — uv sync installs automatically |
 | Run commands | `README.md` | `uv run python src/RBM_MNIST.py` / `RBM_MOVIE.py` |
 | Upgraded Bernoulli RBM | `src_v2/RBM_MNIST.py` | Paper-standard with energy + free energy |
 | Upgraded Softmax RBM | `src_v2/RBM_MOVIE.py` | Paper-standard with Matplotlib visualization |
@@ -68,7 +68,7 @@ Project/
 ## COMMANDS
 ```bash
 # Setup
-uv sync                                         # Install dependencies (non-torch)
+uv sync                                         # Install all dependencies (including torch/torchvision)
 # Run
 uv run python src/RBM_MNIST.py                  # MNIST image reconstruction demo
 uv run python src/RBM_MOVIE.py                  # MovieLens recommendation demo
@@ -80,8 +80,8 @@ uv run python src_v2/RBM_MOVIE.py              # Upgraded Softmax RBM with visua
 ```
 
 ## NOTES
-- **PyTorch NOT in `pyproject.toml`**: `torch` + `torchvision` are imported but undeclared. Install manually via `uv add torch torchvision` or ensure pre-installed in environment.
-- **Python >=3.12 required** — 3.13 may fail due to PyTorch compatibility.
+- **PyTorch declared in `pyproject.toml`**: `torch` and `torchvision` are now in `[project] dependencies` — `uv sync` installs everything automatically.
+- **Python >=3.12 required** — PyTorch 2.11+ fully supports Python 3.12/3.13/3.14.
 - **uv with Tsinghua mirror**: `pyproject.toml` points to `pypi.tuna.tsinghua.edu.cn` — change if outside China.
 - **Data auto-downloads**: Both scripts download datasets on first run. `data/` and `ml-100k/` are gitignored.
 - **`rbm_mnist.pth` at root**: Pre-trained checkpoint. `RBM_MNIST.py` reuses it to skip training. Gitignored.
